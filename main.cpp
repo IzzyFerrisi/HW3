@@ -416,8 +416,7 @@ void printFrequencyReport(std::ostream& outStream, const int counts[])
         outStream << " " << ranked[i];
     }
     outStream << std::endl;
-    }
-
+    
     outStream.flags(oldFlags);
     outStream.precision(oldPrecision);
 }
