@@ -395,7 +395,7 @@ void printFrequencyReport(std::ostream& outStream, const int counts[])
     std::ios::fmtflags oldFlags = outStream.flags();
     std::streamsize oldPrecision = outStream.precision();
     
-    outStream << "Letter Count Percent" << std::endl;
+    outStream << "Letter  Count  Percent" << std::endl;
     outStream << std::fixed << std::setprecision(2);
     for (int i = 0; i < ALPHABET_SIZE; i++)
     {
@@ -403,17 +403,19 @@ void printFrequencyReport(std::ostream& outStream, const int counts[])
         {
             double percent = 100.0 * counts[i]/total;
             outStream << std::setw(6) << static_cast<char>('A' + i)
-            << std::setw(6) << counts[i]
-            << std::setw(8) << percent << std::endl;
+            << std::setw(7) << counts[i]
+            << std::setw(8) << percent << "%" << std::endl;
         }
     }
-    outStream << "Total Letters" << total << std::endl;
+    outStream << "Total letters: " << total << std::endl;
+    
     char ranked[ALPHABET_SIZE];
     rankLetters(counts, ranked);
-    outStream << "Most Frequent:";
+    outStream << "Most frequent:";
     for (int i = 0; i < TOP_LETTERS; i++)
     {
-        outStream << " " << ranked[i];
+        if (counts[ranked[i] - 'A'] > 0)
+            outStream << " " << ranked[i];
     }
     outStream << std::endl;
     
@@ -439,7 +441,7 @@ int transformText(std::istream& inStream, std::ostream& outStream, int shift)
     char ch;
     while (inStream.get(ch))
     {
-        if ((ch >= 'A' && ch <= 'Z') || ch >= 'a' && ch <= 'z')
+        if ((ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z'))
         {
             letter++;
         }
